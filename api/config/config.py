@@ -14,7 +14,7 @@ class Config:
 
 class DevConfig(Config):
     DEBUG=config('DEBUG',cast=bool)
-    SQLALCHEMY_ECHO=True
+    # SQLALCHEMY_ECHO=True
     SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{Config.MYSQL_USER}:{Config.MYSQL_PASSWORD}@{Config.MYSQL_HOST}/{Config.MYSQL_DATABASE}'
 
 class TestConfig(Config):

@@ -1,6 +1,8 @@
-from flask_restx import Namespace, Resource
+from flask_restx import Namespace, Resource, fields
+
 
 user_ns = Namespace('user', description='მომხმარებლებთან დაკავშირებული API endpoint-ები')
+
 
 @user_ns.route('/user/<int:user_id>')
 class SpecificUser(Resource):
@@ -20,7 +22,8 @@ class SpecificUser(Resource):
 
 @user_ns.route('/user')
 class User(Resource):
+
     def get(self):
         ''' ყველა მომხმარებლის ინფორმაციის წამოღება '''
 
-        pass
+    pass

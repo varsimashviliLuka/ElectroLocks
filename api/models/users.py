@@ -8,17 +8,21 @@ class User(db.Model):
     username = db.Column(db.String(45), unique=True, nullable=False)
     name = db.Column(db.String(45), nullable=False)
     last_name = db.Column(db.String(45), nullable=False)
-    email = db.Column(db.String(45))
-    phone_number = db.Column(db.String(45))
+    email = db.Column(db.String(45), nullable=True)
+    phone_number = db.Column(db.String(45), nullable=True)
     password_hash = db.Column(db.Text(),nullable=False)
-    balance = db.Column(db.Float(), default=0.0)
-    status = db.Column(db.Integer())
+    balance = db.Column(db.Float(), default=0.0, nullable=True)
+    status = db.Column(db.Integer(), default=0, nullable=False)
     is_admin = db.Column(db.Boolean(), default=False)
-    registered_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    registered_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
 
-    services = db.relationship('Order', backref='costumer', lazy=True)
+    services = db.relationship('Services', backref='users', lazy=True)
 
     def __repr__(self):
         return f"<User {self.username}>"
+    
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
 
