@@ -25,4 +25,7 @@ class User(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def check_permission(self):
+        return self.is_admin
+
 
