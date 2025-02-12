@@ -45,6 +45,8 @@ password_chage_model = account_ns.model(
 
 @account_ns.route('/account')
 class Account(Resource):
+    
+    @account_ns.doc(security='JsonWebToken')
     @jwt_required()
     def get(self):
         ''' საკუთარი მონაცემის ნახვა  '''
@@ -56,7 +58,9 @@ class Account(Resource):
             return {'error': 'დაფიქსირდა შეცდომა მომხმარებლის ინფორმაციის წამოღებაზე'}, 404
         
         return marshal(user,user_model), 200
-    
+
+
+    @account_ns.doc(security='JsonWebToken')
     @jwt_required()
     @account_ns.expect(password_chage_model)
     def put(self):

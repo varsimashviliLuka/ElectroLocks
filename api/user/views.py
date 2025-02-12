@@ -25,6 +25,8 @@ user_model=user_ns.model(
 
 @user_ns.route('/user/<int:user_id>')
 class SpecificUser(Resource):
+
+    @user_ns.doc(security='JsonWebToken')
     @user_ns.expect(user_model)
     @jwt_required()
     def put(self,user_id):
@@ -72,8 +74,7 @@ class SpecificUser(Resource):
 
         
 
-
-
+    @user_ns.doc(security='JsonWebToken')
     @jwt_required()
     def get(self, user_id):
         ''' კონკრეტული მომხმარებლის ინფორმაციის წამოღება '''
@@ -89,9 +90,10 @@ class SpecificUser(Resource):
             return {'error': 'მითითებული ID-ით მომხმარებელი ვერ მოიძებნა'}, 404
         
         return marshal(user,show_user_model), 200
-        
-        
     
+        
+        
+    @user_ns.doc(security='JsonWebToken')
     @jwt_required()
     def delete(self,user_id):
         ''' კონკრეტული მომხმარებლის წაშლა '''
@@ -113,7 +115,8 @@ class SpecificUser(Resource):
 
 @user_ns.route('/user')
 class Users(Resource):
-
+    
+    @user_ns.doc(security='JsonWebToken')
     @jwt_required()
     def get(self):
         ''' ყველა მომხმარებლის ინფორმაციის წამოღება '''

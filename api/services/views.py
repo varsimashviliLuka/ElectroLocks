@@ -36,6 +36,7 @@ service_model = services_ns.model('ServiceModel',{
 @services_ns.route('/services')
 class ServicesApi(Resource):
 
+    @services_ns.doc(security='JsonWebToken')
     @services_ns.expect(service_create_model)
     @jwt_required()
     def post(self):
@@ -61,8 +62,9 @@ class ServicesApi(Resource):
             return {'message': 'სერვისი წარმატებით შეიქმნა'}
         except:
             return {'error': 'სერვისის შექმნისას დაფიქსირდა შეცდომა'}, 400
+        
 
-
+    @services_ns.doc(security='JsonWebToken')
     @jwt_required()
     def get(self):
         ''' ყველა სერვისის ინფორმაციის წამოღება '''
@@ -84,6 +86,8 @@ class ServicesApi(Resource):
     
 @services_ns.route('/services/<int:service_id>')
 class SpecificServices(Resource):
+
+    @services_ns.doc(security='JsonWebToken')
     @jwt_required()
     def get(self,service_id):
         ''' კონკრეტული სერვისის ინფორმაციის წამოღება '''
@@ -99,7 +103,10 @@ class SpecificServices(Resource):
             return {'error': 'სერვისი ვერ მოიძებნა'}, 404
         
         return marshal(service,service_model), 200
+    
+    
 
+    @services_ns.doc(security='JsonWebToken')
     @services_ns.expect(service_create_model)
     @jwt_required()
     def put(self, service_id):
@@ -129,7 +136,8 @@ class SpecificServices(Resource):
 
         return {'message': 'სერვისი წარმატებით დარედაქტირდა'}, 200
     
-
+    
+    @services_ns.doc(security='JsonWebToken')
     @jwt_required()
     def delete(self,service_id):
         ''' კონკრეტული სერვისის წაშლა '''

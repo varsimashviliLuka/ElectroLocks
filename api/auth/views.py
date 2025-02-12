@@ -32,6 +32,7 @@ login_model = auth_ns.model(
 @auth_ns.route('/registration')
 class Registration(Resource):
 
+    @auth_ns.doc(security='JsonWebToken')
     @jwt_required()
     @auth_ns.expect(signup_model)
     def post(self):
@@ -64,6 +65,8 @@ class Registration(Resource):
         new_user.create()
 
         return {'message': 'მომხმარებელი წარმატებით დარეგისტრირდა'}, 200
+    
+
 
 @auth_ns.route('/login')
 class Login(Resource):
@@ -89,9 +92,12 @@ class Login(Resource):
         
         return {'error': 'არასწორი მომხმარებელი/პაროლი'}, 401
     
+
+    
 @auth_ns.route('/refresh')
 class Refresh(Resource):
-
+    
+    @auth_ns.doc(security='JsonWebToken')
     @jwt_required(refresh=True)
     def post(self):
         ''' JWT ტოკენის დარეფრეშება '''
