@@ -11,10 +11,18 @@ class Config:
     MYSQL_USER = config('MYSQL_USER', 'default_user')
     MYSQL_PASSWORD = config('MYSQL_PASSWORD', 'default_password')
 
-    JWT_ACCESS_TOKEN_EXPIRES=timedelta(minutes=30)
-    JWT_REFRESH_TOKEN_EXPIRES=timedelta(minutes=30)
+    JWT_ACCESS_TOKEN_EXPIRES=timedelta(days=30)
+    JWT_REFRESH_TOKEN_EXPIRES=timedelta(days=30)
 
     JWT_SECRET_KEY=config('JWT_SECRET_KEY', 'secret')
+
+    AUTHORIZATION= {
+        'JsonWebToken': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    }
     # MySQL connection URI
     # SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}/{MYSQL_DATABASE}'
 

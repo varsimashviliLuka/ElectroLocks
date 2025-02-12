@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token,create_refresh_token, jwt_required, get_jwt_identity
 
 
-auth_ns = Namespace('authentication', description='authentication სთან დაკავშირებული API endpoint-ები')
+auth_ns = Namespace('Authentication', description='authentication სთან დაკავშირებული API endpoint-ები')
 
 
 signup_model=auth_ns.model(
@@ -61,7 +61,7 @@ class Registration(Resource):
             is_admin = data.get('is_admin')
         )
 
-        new_user.save()
+        new_user.create()
 
         return {'message': 'მომხმარებელი წარმატებით დარეგისტრირდა'}, 200
 
